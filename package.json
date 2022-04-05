@@ -1,0 +1,8 @@
+{
+  "name": "vanillaCountDown",
+  "version": "1.0.0",
+  "main": "vanillaCountdown.js",
+  "repository": "https://github.com/timmit-nl/vanillaCountdown",
+  "author": "timmit-nl",
+  "license": "MIT"
+}
