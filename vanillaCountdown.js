@@ -97,6 +97,7 @@
 
 	// Timer Functie
 	function timer() {
+
 		var count = calculateCount();
 		if (settings.checkTimeUrl) {
 			if (count == 60 || count == 10) {
@@ -104,45 +105,64 @@
 			}
 		}
 
-		// if (count == -1) {
-		// 	clearInterval(counter);
-		// 	return;
-		// }
+		var elementCountdownProgressContainer = document.getElementById(settings.countdownProgressContainerId);
+		var elementCountdownProgress = document.getElementById(settings.countdownProgressId);
+		var elementCountdownTime = document.getElementById(settings.countdownTimeId);
+		var countdownProgressContainerIdElement = document.getElementById(settings.countdownProgressContainerId);
+		var countdownProgressIdElement = document.getElementById(settings.countdownProgressId);
+		var countdownTimeIdElement = document.getElementById(settings.countdownTimeId);
+
 		var progress = (-((100 / settings.seconds) * count) + 100);
 		var sec = count % 60;
 		var min = Math.floor(count / 60);
 		min %= 60;
-		document.getElementById(settings.countdownTimeId).innerHTML = ('0' + min).slice(-2) + ':' + ('0' + sec).slice(-2);
-		document.getElementById(settings.countdownProgressId).style.width = ((98.5) - progress) + '%';
+
+		if (typeof(elementCountdownTime) != 'undefined' && elementCountdownTime != null) {
+			elementCountdownTime.innerHTML = ('0' + min).slice(-2) + ':' + ('0' + sec).slice(-2);
+		}
+
+		if (typeof(elementCountdownProgress) != 'undefined' && elementCountdownProgress != null) {
+			elementCountdownProgress.style.width = ((98.5) - progress) + '%';
+		}
 
 		if (settings.partTwo) {
 			if (count == settings.partTwoSeconds) {
 				if (settings.partTwoClassContainer) {
-					document.getElementById(settings.countdownProgressContainerId).classList.add(settings.partTwoClassContainer);
+					if (typeof(elementCountdownProgressContainer) != 'undefined' && elementCountdownProgressContainer != null) {
+						elementCountdownProgressContainer.classList.add(settings.partTwoClassContainer);
+					}
 				}
 				if (settings.partTwoClassProgress) {
-					document.getElementById(settings.countdownProgressId).classList.add(settings.partTwoClassProgress);
+					if (typeof(elementCountdownProgress) != 'undefined' && elementCountdownProgress != null) {
+						elementCountdownProgress.classList.add(settings.partTwoClassProgress);
+					}
 				}
 				if (settings.partTwoClass) {
-					document.getElementById(settings.countdownTimeId).classList.add(settings.partTwoClass);
+					if (typeof(elementCountdownTime) != 'undefined' && elementCountdownTime != null) {
+						elementCountdownTime.classList.add(settings.partTwoClass);
+					}
 				}
 				settings.partTwoCallBack();
 			} else {
 				if (count > settings.partTwoSeconds && count % 30 == 0) {
 					if (settings.partTwoClassContainer) {
-						document.getElementById(settings.countdownProgressContainerId).classList.remove(settings.partTwoClassContainer);
+						if (typeof(countdownProgressContainerIdElement) != 'undefined' && countdownProgressContainerIdElement != null) {
+							countdownProgressContainerIdElement.classList.remove(settings.partTwoClassContainer);
+						}
 					}
 					if (settings.partTwoClassProgress) {
-						document.getElementById(settings.countdownProgressId).classList.remove(settings.partTwoClassProgress);
+						if (typeof(countdownProgressIdElement) != 'undefined' && countdownProgressIdElement != null) {
+							countdownProgressIdElement.classList.remove(settings.partTwoClassProgress);
+						}
 					}
 					if (settings.partTwoClass) {
-						document.getElementById(settings.countdownTimeId).classList.remove(settings.partTwoClass);
+						if (typeof(countdownTimeIdElement) != 'undefined' && countdownTimeIdElement != null) {
+							countdownTimeIdElement.classList.remove(settings.partTwoClass);
+						}
 					}
 				}
 			}
 		}
-
-
 
 		if (count <= 0) {
 			if (settings.onCompleteUrl) {
