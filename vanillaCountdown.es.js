@@ -1,5 +1,3 @@
-import 'axios';
-
 const vanillaCountdown = {
 
 	settings: null,
@@ -172,18 +170,25 @@ const vanillaCountdown = {
 	},
 
 	/**
-	 * Destroy the current initialization.
+	 * Check the start time from the server.
 	 * @public
+	 * @param {string} checkTimeUrl - The URL to fetch the start time from
 	 */
 	checkStartTime: function(checkTimeUrl) {
-		axios.get(checkTimeUrl)
+		fetch(checkTimeUrl)
 			.then(function(response) {
-				if (response.data != false) {
+				return response.json();
+			})
+			.then(function(data) {
+				if (data !== false) {
 					var d = new Date();
-					d.setTime(response.data.expireAtTimestamp * 1000);
+					d.setTime(data.expireAtTimestamp * 1000);
 					vanillaCountdown.expireAt = d;
 					vanillaCountdown.settings.checkTimeCallBack();
 				}
+			})
+			.catch(function(error) {
+				console.error('Error checking start time:', error);
 			});
 	},
 
